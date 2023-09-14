@@ -14,3 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'landing');
+
+Route::get('/about', function () {
+    $title = 'About Us';
+    $description = 'Blogging is website for sharing your thoughts and ideas with the world.';
+    $button = '<a class="btn btn-lg btn-secondary" href="/">Back to Landing Page</a>';
+
+
+    return view('about', compact('title', 'description', 'button'));
+});
