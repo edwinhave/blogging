@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -17,6 +18,15 @@ class ContactController extends Controller
             'email' => 'required|string|email',
             'phone_number' => 'required|numeric|digits_between:10,15',
         ]);
-        return $request->full_name;
+
+        /* $newContact = new Contact();
+        $newContact->full_name = $validated['full_name'];
+        $newContact->email = $validated['email'];
+        $newContact->phone_number = $validated['phone_number'];
+        $newContact->save();
+        */
+
+        $contact = Contact::create($validated);
+        return redirect()->route('contact-us.index')->with('success', 'Thank you, we will contact you soon!');
     }
 }
