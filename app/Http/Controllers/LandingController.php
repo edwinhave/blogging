@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -11,7 +12,8 @@ class LandingController extends Controller
      */
     public function __invoke(Request $request)
     {
-        //
-        return view('landing');
+        $articles = Article::query()->latest()->paginate(7);
+        $featured = $articles->shift();
+        return view('landing', compact('articles', 'featured'));
     }
 }
