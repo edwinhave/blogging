@@ -26,3 +26,7 @@ Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us
 Route::post('contact-us', [ContactController::class, 'store'])->name('contact-us.store');
 
 Route::resource('articles', ArticleController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->text('body')->nullable();
             $table->integer('views')->default(0);
-            $table->timestamp('published_at')->default(null);
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

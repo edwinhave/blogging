@@ -32,6 +32,8 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+
         $validated = $request->validate([
             'title' => 'required|string|min:3|max:255',
             'body' => 'required|string',
