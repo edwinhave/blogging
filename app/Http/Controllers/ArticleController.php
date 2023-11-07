@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AdminAccess;
 use App\Models\Article;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show', 'index']);
+        $this->middleware('admin')->except(['show', 'index']);
+    }
     /**
      * Display a listing of the resource.
      */
