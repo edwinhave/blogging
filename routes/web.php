@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', LandingController::class);
+Route::get('/', LandingController::class)->name('landing');
 
-Route::get('/about', [AboutController::class, 'index']); //->name('about');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us.index');
 
