@@ -33,6 +33,14 @@
                     <label for="body" class="form-label">Body</label>
                     <textarea class="form-control" rows="10" name="body">{{ old('body') }}</textarea>
                 </div>
+                <div class="mb-3 col-md-12 col-sm-12">
+                    <select class="form-select form-select-lg mb-3" name="category_id">
+                        <option>No Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-check form-switch mb-3">
                     <label class="form-check-label" for="is_published">Publish?</label>
                     <input class="form-check-input" type="checkbox" id="is_published" name="is_published">

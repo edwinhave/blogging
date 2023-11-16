@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\AdminAccess;
 use App\Models\Article;
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $categories = Category::all();
+        return view('articles.create', compact('categories'));
     }
 
     /**
@@ -44,6 +46,8 @@ class ArticleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|min:3|max:255',
             'body' => 'required|string',
+             //Tambah kolom category_id
+             'category_id' => 'nullable|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
@@ -60,9 +64,11 @@ class ArticleController extends Controller
             'body' => $validated['body'],
             'image' => $validated['image'] ?? null,
             'published_at' => $request->has('is_published') ? Carbon::now() : null,
+            //Tambah category_id
+            'category_id' => $validated['category_id'] ?? null,
         ]);
 
-        return redirect()->route('articles.index')->with('success', 'Article Created');
+        return redirect()->route('articles.index')->with('success', 'Article added successfully.');
     }
 
     /**
@@ -78,7 +84,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('articles.edit', compact('article'));
+        $categories = Category::all();
+        return view('articles.edit', compact('article','categories'));
     }
 
     /**
