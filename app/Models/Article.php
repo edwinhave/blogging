@@ -16,6 +16,7 @@ class Article extends Model
         'body',
         'published_at',
         'views',
+        'category_id'
     ];
 
     protected $append = [
@@ -30,5 +31,10 @@ class Article extends Model
         }
         //Jika bukan URL, maka gunakan Storage::url untuk mengambil URL dari path gambar
         return $this->image ? Storage::url($this->image) : null;
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
