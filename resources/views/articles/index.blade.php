@@ -9,9 +9,12 @@
         <a href="{{ route('articles.create') }}" class="btn btn-primary btn-sm">Add New Category</a>
     </div>
     @if (session()->has('success'))
-        <div class="alert alert-success mt-4">
+        <x-alert type="success" class="mt-4">
             {{ session()->get('success') }}
-        </div>
+        </x-alert>
+        {{-- <div class="alert alert-success mt-4">
+            {{ session()->get('success') }}
+        </div> --}}
     @endif
 
 
