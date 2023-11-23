@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\AdminAccess;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +34,8 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('articles.create', compact('categories'));
+        $tags = Tag::all();
+        return view('articles.create', compact('categories', 'tags'));
     }
 
     /**
@@ -46,8 +48,8 @@ class ArticleController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|min:3|max:255',
             'body' => 'required|string',
-             //Tambah kolom category_id
-             'category_id' => 'nullable|exists:categories,id',
+            //Tambah kolom category_id
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
@@ -67,10 +69,11 @@ class ArticleController extends Controller
             //Tambah category_id
             'category_id' => $validated['category_id'] ?? null,
         ]);
-
+        if ($request->has('tags')) {
+            $article->tags()->attach($request->input('tags'));
+        }
         return redirect()->route('articles.index')->with('success', 'Article added successfully.');
     }
-
     /**
      * Display the specified resource.
      */
@@ -85,7 +88,8 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         $categories = Category::all();
-        return view('articles.edit', compact('article','categories'));
+        $tags = Tag::all();
+        return view('articles.edit', compact('article', 'categories', 'tags'));
     }
 
     /**
@@ -116,6 +120,9 @@ class ArticleController extends Controller
             'published_at' => $request->has('is_published') ? Carbon::now() : null,
 
         ]);
+        if ($request->has('tags')) {
+            $article->tags()->sync($request->input('tags'));
+        }
 
         return redirect()->route('articles.index')->with('success', 'Article Created');
     }

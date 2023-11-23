@@ -75,6 +75,7 @@
             <nav class="nav d-flex justify-content-center">
                 <a class="p-2 link-secondary" href="{{ route('categories.index') }}">Categories</a>
                 <a class="p-2 link-secondary" href="{{ route('articles.index') }}">Articles</a>
+                <a class="p-2 link-secondary" href="{{ route('tags.index') }}">Tags</a>
             </nav>
         </div>
     @endauth

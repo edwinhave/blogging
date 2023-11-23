@@ -49,6 +49,15 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="mb-3 col-md-12 col-sm-12">
+                    <select class="form-select form-select-lg mb-3" name="tags[]" multiple>
+                        @foreach ($tags as $tag)
+                            <option value="{{ $tag->id }}" {{ $article->tags->contains($tag->id) ? 'selected' : '' }}>
+                                {{ $tag->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-check form-switch mb-3">
                     <label class="form-check-label" for="is_published">Publish?</label>
                     <input class="form-check-input" type="checkbox" id="is_published" name="is_published"
